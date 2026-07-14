@@ -18,13 +18,6 @@
  *    and send a few notifications, showing you can swap strategies
  *    at runtime without changing NotificationService's code.
  *
- * BONUS:
- * - Add a MultiChannelSender that implements NotificationSender but
- *   internally holds a List<NotificationSender> and sends through all
- *   of them (Composite pattern).
- * - Discuss out loud: why is this better than an if/else chain checking
- *   a "type" string inside NotificationService?
- *
  * Compile:  javac NotificationPractice.java
  * Run:      java NotificationPractice
  */
@@ -41,25 +34,25 @@ public class NotificationPractice {
     static class EmailSender implements NotificationSender {
         @Override
         public void send(String message, String recipient) {
-            // TODO: implement
+            System.out.println("📧 Email sent to " + recipient + ": " + message);
         }
     }
 
     static class SmsSender implements NotificationSender {
         @Override
         public void send(String message, String recipient) {
-            // TODO: implement
+            System.out.println("📱 SMS sent to " + recipient + ": " + message);
         }
     }
 
     static class PushSender implements NotificationSender {
         @Override
         public void send(String message, String recipient) {
-            // TODO: implement
+            System.out.println("🔔 Push Notification sent to " + recipient + ": " + message);
         }
     }
 
-    // BONUS class - implement after the three above work
+    // BONUS
     static class MultiChannelSender implements NotificationSender {
         private List<NotificationSender> senders = new ArrayList<>();
 
@@ -69,7 +62,9 @@ public class NotificationPractice {
 
         @Override
         public void send(String message, String recipient) {
-            // TODO: loop through senders and call send() on each
+            for (NotificationSender sender : senders) {
+                sender.send(message, recipient);
+            }
         }
     }
 
@@ -81,22 +76,34 @@ public class NotificationPractice {
         }
 
         public void notifyUser(String message, String recipient) {
-            // TODO: delegate to sender
+            sender.send(message, recipient);
         }
 
-        // BONUS: allow swapping the strategy at runtime
+        // BONUS
         public void setSender(NotificationSender sender) {
             this.sender = sender;
         }
     }
 
     public static void main(String[] args) {
+
         NotificationService service = new NotificationService(new EmailSender());
+
         service.notifyUser("Your order shipped!", "bob@mail.com");
 
         service.setSender(new SmsSender());
         service.notifyUser("Your OTP is 4321", "+91-9999999999");
 
-        // TODO: try MultiChannelSender once implemented
+        service.setSender(new PushSender());
+        service.notifyUser("Welcome to our app!", "Divya");
+
+        // Multi-channel notification
+        MultiChannelSender multi = new MultiChannelSender();
+        multi.addSender(new EmailSender());
+        multi.addSender(new SmsSender());
+        multi.addSender(new PushSender());
+
+        service.setSender(multi);
+        service.notifyUser("Big Sale starts today!", "divya@example.com");
     }
 }
