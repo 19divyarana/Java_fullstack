@@ -23,13 +23,10 @@ public class ShapePractice {
 
     // ---- Abstract base class ----
     static abstract class Shape {
-        // TODO: declare any common fields (e.g., a name) if you want
 
         public abstract double area();
 
         public abstract double perimeter();
-
-        // TODO: override toString() here if you want a default format
     }
 
     // ---- Circle ----
@@ -42,20 +39,19 @@ public class ShapePractice {
 
         @Override
         public double area() {
-            // TODO: implement
-            return 0;
+            return Math.PI * radius * radius;
         }
 
         @Override
         public double perimeter() {
-            // TODO: implement
-            return 0;
+            return 2 * Math.PI * radius;
         }
 
         @Override
         public String toString() {
-            // TODO: implement
-            return "";
+            return "Circle [Radius = " + radius +
+                    ", Area = " + String.format("%.2f", area()) +
+                    ", Perimeter = " + String.format("%.2f", perimeter()) + "]";
         }
     }
 
@@ -71,24 +67,24 @@ public class ShapePractice {
 
         @Override
         public double area() {
-            // TODO: implement
-            return 0;
+            return width * height;
         }
 
         @Override
         public double perimeter() {
-            // TODO: implement
-            return 0;
+            return 2 * (width + height);
         }
 
         @Override
         public String toString() {
-            // TODO: implement
-            return "";
+            return "Rectangle [Width = " + width +
+                    ", Height = " + height +
+                    ", Area = " + area() +
+                    ", Perimeter = " + perimeter() + "]";
         }
     }
 
-    // ---- Triangle (assume you're given 3 sides, use Heron's formula) ----
+    // ---- Triangle ----
     static class Triangle extends Shape {
         private double a, b, c;
 
@@ -100,34 +96,39 @@ public class ShapePractice {
 
         @Override
         public double area() {
-            // TODO: implement using Heron's formula
-            return 0;
+            double s = perimeter() / 2;
+            return Math.sqrt(s * (s - a) * (s - b) * (s - c));
         }
 
         @Override
         public double perimeter() {
-            // TODO: implement
-            return 0;
+            return a + b + c;
         }
 
         @Override
         public String toString() {
-            // TODO: implement
-            return "";
+            return "Triangle [Sides = " + a + ", " + b + ", " + c +
+                    ", Area = " + String.format("%.2f", area()) +
+                    ", Perimeter = " + perimeter() + "]";
         }
     }
 
     public static void main(String[] args) {
+
         Shape[] shapes = {
-            new Circle(5),
-            new Rectangle(4, 6),
-            new Triangle(3, 4, 5)
+                new Circle(5),
+                new Rectangle(4, 6),
+                new Triangle(3, 4, 5)
         };
+
+        double totalArea = 0;
 
         for (Shape s : shapes) {
             System.out.println(s);
+            totalArea += s.area();
         }
 
-        // TODO: print total area of all shapes using a loop or a static helper
+        System.out.println("--------------------------------");
+        System.out.printf("Total Area = %.2f%n", totalArea);
     }
 }
