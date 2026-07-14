@@ -22,13 +22,6 @@
  *    each, and print results. Show that calling withdraw() through a
  *    base Account reference still triggers the correct subclass behavior
  *    (polymorphism).
- *
- * BONUS:
- * - Add a printStatement() method that subclasses can override to show
- *   account-type-specific info.
- * - Throw a custom exception (e.g., InsufficientFundsException) instead
- *   of just printing an error.
- *
  * Compile:  javac BankAccountPractice.java
  * Run:      java BankAccountPractice
  */
@@ -55,16 +48,25 @@ public class BankAccountPractice {
         }
 
         public void deposit(double amount) {
-            // TODO: validate amount > 0, then add to balance
+            if (amount > 0) {
+                balance += amount;
+                System.out.println("Deposited ₹" + amount);
+            } else {
+                System.out.println("Invalid deposit amount!");
+            }
         }
 
         public void withdraw(double amount) {
-            // TODO: base implementation - block if amount > balance
+            if (amount <= 0) {
+                System.out.println("Invalid withdrawal amount!");
+            } else if (amount > balance) {
+                System.out.println("Insufficient balance!");
+            } else {
+                balance -= amount;
+                System.out.println("Withdrawn ₹" + amount);
+            }
         }
 
-        // Subclasses need to be able to read/modify balance directly.
-        // TODO: decide - add a protected setter, or keep withdraw/deposit
-        // as the only way subclasses touch balance (better encapsulation).
         protected void setBalance(double balance) {
             this.balance = balance;
         }
@@ -75,19 +77,27 @@ public class BankAccountPractice {
         private static final double MIN_BALANCE = 500;
 
         public SavingsAccount(String accountNumber, String ownerName,
-                               double balance, double interestRate) {
+                              double balance, double interestRate) {
             super(accountNumber, ownerName, balance);
             this.interestRate = interestRate;
         }
 
         public void applyInterest() {
-            // TODO: implement - balance += balance * interestRate
+            double newBalance = getBalance() + (getBalance() * interestRate);
+            setBalance(newBalance);
+            System.out.println("Interest applied.");
         }
 
         @Override
         public void withdraw(double amount) {
-            // TODO: implement - block withdrawal if it would drop
-            // balance below MIN_BALANCE
+            if (amount <= 0) {
+                System.out.println("Invalid withdrawal amount!");
+            } else if ((getBalance() - amount) < MIN_BALANCE) {
+                System.out.println("Withdrawal denied! Minimum balance of ₹" + MIN_BALANCE + " must be maintained.");
+            } else {
+                setBalance(getBalance() - amount);
+                System.out.println("Withdrawn ₹" + amount);
+            }
         }
     }
 
@@ -95,15 +105,21 @@ public class BankAccountPractice {
         private double overdraftLimit;
 
         public CurrentAccount(String accountNumber, String ownerName,
-                               double balance, double overdraftLimit) {
+                              double balance, double overdraftLimit) {
             super(accountNumber, ownerName, balance);
             this.overdraftLimit = overdraftLimit;
         }
 
         @Override
         public void withdraw(double amount) {
-            // TODO: implement - allow balance to go negative but not
-            // past -overdraftLimit
+            if (amount <= 0) {
+                System.out.println("Invalid withdrawal amount!");
+            } else if ((getBalance() - amount) < (-overdraftLimit)) {
+                System.out.println("Withdrawal denied! Overdraft limit exceeded.");
+            } else {
+                setBalance(getBalance() - amount);
+                System.out.println("Withdrawn ₹" + amount);
+            }
         }
     }
 
@@ -112,12 +128,14 @@ public class BankAccountPractice {
         Account current = new CurrentAccount("CA001", "Rahul", 500, 1000);
 
         savings.deposit(1000);
-        savings.withdraw(2600); // should be blocked (below min balance)
+        savings.withdraw(2600);   // Blocked
 
-        current.withdraw(1200); // should succeed (within overdraft)
-        current.withdraw(500);  // should be blocked (past overdraft)
+        ((SavingsAccount) savings).applyInterest();
 
-        System.out.println(savings.getOwnerName() + " balance: " + savings.getBalance());
-        System.out.println(current.getOwnerName() + " balance: " + current.getBalance());
+        current.withdraw(1200);   // Allowed
+        current.withdraw(500);    // Blocked
+
+        System.out.println(savings.getOwnerName() + " balance: ₹" + savings.getBalance());
+        System.out.println(current.getOwnerName() + " balance: ₹" + current.getBalance());
     }
 }
