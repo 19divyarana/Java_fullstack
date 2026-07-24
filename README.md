@@ -55,21 +55,7 @@ It contains:
 - [ ] Encapsulation
 - [ ] Interfaces
 
-
-## 🟣 Phase 3: Advanced Java
-
-- [ ] Packages
-- [ ] Wrapper Classes
-- [ ] Strings
-- [ ] StringBuilder
-- [ ] Exception Handling
-- [ ] File Handling
-- [ ] Serialization
-- [ ] Generics
-
-
-
-## 🟠 Phase 4: Collections Framework
+## 🟠 Phase 3: Collections Framework
 
 - [ ] List
 - [ ] ArrayList
@@ -88,29 +74,7 @@ It contains:
 - [ ] Comparator
 
 
-
-## 🔴 Phase 5: Multithreading
-
-- [ ] Thread Class
-- [ ] Runnable Interface
-- [ ] Synchronization
-- [ ] Thread Lifecycle
-- [ ] Executor Framework
-
-
-
-## 🟢 Phase 6: Java 8 Features
-
-- [ ] Lambda Expressions
-- [ ] Functional Interfaces
-- [ ] Stream API
-- [ ] Method References
-- [ ] Optional
-- [ ] Date & Time API
-
-
-
-## 🔵 Phase 7: JDBC
+## 🔵 Phase 4: JDBC
 
 - [ ] JDBC Architecture
 - [ ] MySQL Connection
@@ -120,7 +84,7 @@ It contains:
 
 
 
-## 🟣 Phase 8: SQL
+## 🟣 Phase 5: SQL
 
 - [ ] DDL
 - [ ] DML
@@ -128,11 +92,8 @@ It contains:
 - [ ] TCL
 - [ ] Constraints
 - [ ] Joins
-- [ ] Subqueries
-- [ ] Views
-- [ ] Stored Procedures
 
-## 🟠 Phase 9: Spring Framework
+## 🟠 Phase 6: Spring Framework
 
 - [ ] Spring Core
 - [ ] Dependency Injection
@@ -142,7 +103,7 @@ It contains:
 - [ ] REST API
 
 
-## 🔴 Phase 10: Spring Boot
+## 🔴 Phase 7: Spring Boot
 
 - [ ] Spring Boot Basics
 - [ ] CRUD REST API
@@ -157,7 +118,7 @@ It contains:
 
 
 
-## 🟢 Phase 11: Frontend
+## 🟢 Phase 8: Frontend
 
 - [ ] HTML
 - [ ] CSS
@@ -167,18 +128,7 @@ It contains:
 - [ ] REST API Integration
 
 
-
-## 🔵 Phase 12: Git & GitHub
-
-- [ ] Git Basics
-- [ ] Branching
-- [ ] Pull Requests
-- [ ] Merge
-- [ ] GitHub Actions (Basics)
-
-
-
-## 🟠 Phase 13: DSA in Java
+## 🟠 Phase 9: DSA in Java
 
 - [ ] Arrays
 - [ ] Strings
